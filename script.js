@@ -1,4 +1,3 @@
-// === Fruits Data ===
 const fruits = [
   { name: "Apple", category: "base", value: 20, image: "images/fruits/apple.png" },
   { name: "Carrot", category: "base", value: 15, image: "images/fruits/carrot.png" },
@@ -9,7 +8,6 @@ const fruits = [
   { name: "Cursed Fruit", category: "event", value: 25570, image: "images/fruits/cursedfruit.png" },
 ];
 
-// === Mutations Data ===
 const mutations = [
   { name: "Gold", multiplier: 20, group: "growth" },
   { name: "Rainbow", multiplier: 50, group: "growth" },
@@ -32,75 +30,51 @@ let selectedMutations = [];
 function renderFruits(filter = "all") {
   const grid = document.getElementById("fruitGrid");
   grid.innerHTML = "";
-
   fruits
     .filter(fruit => filter === "all" || fruit.category === filter)
     .forEach(fruit => {
       const div = document.createElement("div");
       div.className = "fruit-item";
-      div.onclick = () => selectFruit(fruit.name);
       if (selectedFruit === fruit.name) div.classList.add("selected");
-      div.innerHTML = `<img src="${fruit.image}" alt="${fruit.name}" /><span>${fruit.name}</span>`;
+      div.innerHTML = `<img src="${fruit.image}" /><span>${fruit.name}</span>`;
+      div.onclick = () => { selectedFruit = fruit.name; renderFruits(filter); };
       grid.appendChild(div);
     });
-}
-
-function selectFruit(name) {
-  selectedFruit = name;
-  renderFruits();
 }
 
 function renderMutations() {
   const container = document.getElementById("mutationContainer");
   container.innerHTML = "";
-  mutations.forEach(mutation => {
+  mutations.forEach(m => {
     const btn = document.createElement("button");
-    btn.innerText = mutation.name;
-    btn.className = "mutation-btn";
-    if (selectedMutations.includes(mutation.name)) btn.classList.add("active");
-    if (!canSelectMutation(mutation)) btn.classList.add("disabled");
-    btn.onclick = () => toggleMutation(mutation.name);
+    btn.innerText = m.name;
+    btn.className = `mutation-btn ${m.name.replace(/\\s+/g, '')}`;
+    if (selectedMutations.includes(m.name)) btn.classList.add("active");
+    if (!canSelectMutation(m)) btn.classList.add("disabled");
+    btn.onclick = () => toggleMutation(m.name);
     container.appendChild(btn);
   });
 }
 
 function toggleMutation(name) {
   if (selectedMutations.includes(name)) {
-    selectedMutations = selectedMutations.filter(m => m !== name);
+    selectedMutations = selectedMutations.filter(n => n !== name);
   } else {
-    const mutation = mutations.find(m => m.name === name);
-    if (canSelectMutation(mutation)) {
-      selectedMutations.push(name);
-    }
+    const m = mutations.find(m => m.name === name);
+    if (canSelectMutation(m)) selectedMutations.push(name);
   }
   renderMutations();
 }
 
 function canSelectMutation(mutation) {
-  const selectedGroups = selectedMutations.map(name => {
-    const m = mutations.find(m => m.name === name);
-    return m?.group;
-  });
-
-  // Growth: Only one (Gold or Rainbow)
-  if (mutation.group === "growth" && selectedGroups.includes("growth")) return false;
-
-  // Water + Cold/Frozen conflict
-  if (mutation.group === "cold" && selectedGroups.includes("water")) return false;
-  if (mutation.group === "water" && selectedGroups.includes("cold")) return false;
-
-  // Heat conflicts
-  if (mutation.name === "Burnt" && selectedMutations.includes("Cooked")) return false;
-  if (mutation.name === "Cooked" && selectedMutations.includes("Burnt")) return false;
-
-  // Clay vs Ceramic
-  if (mutation.name === "Clay" && selectedMutations.includes("Ceramic")) return false;
-  if (mutation.name === "Ceramic" && selectedMutations.includes("Clay")) return false;
-
-  // Verdant + Sundried -> Paradisal (can't co-exist)
-  if ((mutation.name === "Verdant" || mutation.name === "Sundried") && selectedMutations.includes("Paradisal")) return false;
-  if (mutation.name === "Paradisal" && (selectedMutations.includes("Verdant") || selectedMutations.includes("Sundried"))) return false;
-
+  const groupSelected = selectedMutations.map(name => mutations.find(m => m.name === name)?.group);
+  if (mutation.group === "growth" && groupSelected.includes("growth")) return false;
+  if (mutation.group === "cold" && groupSelected.includes("water")) return false;
+  if (mutation.group === "water" && groupSelected.includes("cold")) return false;
+  if (["Burnt", "Cooked"].includes(mutation.name) && selectedMutations.includes(mutation.name === "Burnt" ? "Cooked" : "Burnt")) return false;
+  if (["Clay", "Ceramic"].includes(mutation.name) && selectedMutations.includes(mutation.name === "Clay" ? "Ceramic" : "Clay")) return false;
+  if (["Verdant", "Sundried"].includes(mutation.name) && selectedMutations.includes("Paradisal")) return false;
+  if (mutation.name === "Paradisal" && selectedMutations.some(m => ["Verdant", "Sundried"].includes(m))) return false;
   return true;
 }
 
@@ -112,23 +86,15 @@ function filterFruits(cat) {
 
 function calculate() {
   const weight = parseFloat(document.getElementById("weight").value);
-  if (!selectedFruit) return alert("Please select a fruit!");
-  if (isNaN(weight)) return alert("Enter valid weight!");
-
+  if (!selectedFruit || isNaN(weight)) return alert("Select a fruit and enter weight");
   const fruit = fruits.find(f => f.name === selectedFruit);
-
-  let mutationBonus = 0;
-  selectedMutations.forEach(name => {
+  const totalMultiplier = selectedMutations.reduce((acc, name) => {
     const m = mutations.find(m => m.name === name);
-    if (m) mutationBonus += m.multiplier;
-  });
-
-  const base = fruit.value * weight;
-  const value = base * (1 + mutationBonus);
-
+    return acc + (m ? m.multiplier : 0);
+  }, 0);
+  const value = (fruit.value * weight) * (1 + totalMultiplier);
   document.getElementById("result").innerText = `🍇 ${fruit.name} Value: $${value.toFixed(2)}`;
 }
 
-// On load
 renderFruits();
 renderMutations();
