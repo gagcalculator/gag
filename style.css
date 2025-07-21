@@ -1,42 +1,98 @@
 body {
-  font-family: 'Pixelify Sans', sans-serif;
-  margin: 0;
-  background: #121212;
+  background: #111;
   color: #eee;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 20px;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: auto;
-  padding: 30px;
-  background: #1e1e1e;
-  box-shadow: 0 0 15px #00ffaa44;
-  border-radius: 12px;
-  margin-top: 40px;
 }
 
 h1 {
   text-align: center;
   color: #66ffcc;
-  text-shadow: 0 0 10px #00ffd0;
+  margin-bottom: 20px;
 }
 
-.controls {
+.fruit-filters {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
 }
 
-input, select {
-  padding: 10px;
-  border-radius: 8px;
+.filter-btn {
   background: #222;
-  border: 2px solid #444;
+  color: #ccc;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid #555;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filter-btn.active {
+  border-color: #ffee00;
+  box-shadow: 0 0 10px #ffee00;
+  color: #fff;
+}
+
+.fruit-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.fruit-item {
+  width: 80px;
+  text-align: center;
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.fruit-item:hover {
+  border-color: #66ffcc;
+}
+
+.fruit-item.selected {
+  border-color: #ffee00;
+  box-shadow: 0 0 10px #ffee00;
+}
+
+.fruit-item img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.fruit-item span {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+input {
+  padding: 10px;
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: #1a1a1a;
+  border: 1px solid #444;
   color: #fff;
 }
 
 button {
-  padding: 10px;
+  padding: 10px 15px;
+  margin-top: 10px;
   border: none;
   border-radius: 8px;
   background: #00ffaa;
@@ -54,6 +110,8 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
 }
 
 .mutation-btn {
@@ -65,15 +123,40 @@ button:hover {
   cursor: pointer;
   transition: 0.2s;
   font-size: 14px;
+  min-width: 100px;
+  text-align: center;
 }
 
 .mutation-btn.active {
   background: #00ffaa;
   color: #000;
   font-weight: bold;
+  border-color: #00ffaa;
+  box-shadow: 0 0 5px #00ffaa;
 }
 
 .mutation-btn.disabled {
   opacity: 0.3;
   cursor: not-allowed;
+  pointer-events: none;
+}
+
+#result {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-top: 15px;
+  color: #00ff99;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00ffaa;
+}
+
+@media (max-width: 600px) {
+  .fruit-item {
+    width: 70px;
+  }
+
+  .mutation-btn {
+    min-width: unset;
+    font-size: 12px;
+  }
 }
