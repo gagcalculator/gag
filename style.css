@@ -1,0 +1,79 @@
+body {
+  font-family: 'Pixelify Sans', sans-serif;
+  margin: 0;
+  background: #121212;
+  color: #eee;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 30px;
+  background: #1e1e1e;
+  box-shadow: 0 0 15px #00ffaa44;
+  border-radius: 12px;
+  margin-top: 40px;
+}
+
+h1 {
+  text-align: center;
+  color: #66ffcc;
+  text-shadow: 0 0 10px #00ffd0;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input, select {
+  padding: 10px;
+  border-radius: 8px;
+  background: #222;
+  border: 2px solid #444;
+  color: #fff;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #00ffaa;
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #00ffcc;
+}
+
+.mutations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mutation-btn {
+  padding: 6px 10px;
+  background: #222;
+  border: 2px solid #666;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 14px;
+}
+
+.mutation-btn.active {
+  background: #00ffaa;
+  color: #000;
+  font-weight: bold;
+}
+
+.mutation-btn.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
