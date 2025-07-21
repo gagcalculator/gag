@@ -1,7 +1,7 @@
 body {
-  background: #111;
-  color: #eee;
-  font-family: 'Segoe UI', sans-serif;
+  background: #121212;
+  color: #fff;
+  font-family: Arial, sans-serif;
   padding: 20px;
 }
 
@@ -20,47 +20,45 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 10px;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .filter-btn {
-  background: #222;
+  background: #333;
   color: #ccc;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 2px solid #555;
+  border: 1px solid #666;
+  border-radius: 5px;
+  padding: 8px 12px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .filter-btn.active {
-  border-color: #ffee00;
-  box-shadow: 0 0 10px #ffee00;
-  color: #fff;
+  background: #00ffaa;
+  color: black;
+  font-weight: bold;
 }
 
 .fruit-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
-  margin-bottom: 25px;
 }
 
 .fruit-item {
-  width: 80px;
-  text-align: center;
-  background: #222;
+  background: #1e1e1e;
   padding: 10px;
-  border-radius: 10px;
   border: 2px solid transparent;
-  transition: 0.3s;
+  border-radius: 10px;
+  text-align: center;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-.fruit-item:hover {
-  border-color: #66ffcc;
+.fruit-item img {
+  width: 50px;
+  height: 50px;
 }
 
 .fruit-item.selected {
@@ -68,95 +66,72 @@ h1 {
   box-shadow: 0 0 10px #ffee00;
 }
 
-.fruit-item img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-}
-
-.fruit-item span {
-  display: block;
-  margin-top: 5px;
-  font-size: 13px;
-}
-
 input {
-  padding: 10px;
   width: 100%;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  background: #1a1a1a;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
   border: 1px solid #444;
-  color: #fff;
-}
-
-button {
-  padding: 10px 15px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #00ffaa;
-  color: #111;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #00ffcc;
+  background: #222;
+  color: white;
 }
 
 .mutations {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
   justify-content: center;
 }
 
 .mutation-btn {
   padding: 6px 10px;
-  background: #222;
-  border: 2px solid #666;
-  border-radius: 8px;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.2s;
+  border-radius: 6px;
   font-size: 14px;
-  min-width: 100px;
-  text-align: center;
-}
-
-.mutation-btn.active {
-  background: #00ffaa;
-  color: #000;
   font-weight: bold;
-  border-color: #00ffaa;
-  box-shadow: 0 0 5px #00ffaa;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
 }
 
 .mutation-btn.disabled {
   opacity: 0.3;
-  cursor: not-allowed;
   pointer-events: none;
+}
+
+.mutation-btn.active {
+  outline: 2px solid white;
+  box-shadow: 0 0 10px white;
+}
+
+/* Color themes for mutations */
+.mutation-btn.Gold     { background: gold; color: #000; box-shadow: 0 0 10px gold; }
+.mutation-btn.Rainbow  { background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); color: #000; }
+.mutation-btn.Wet      { background: #0099ff; }
+.mutation-btn.Chilled  { background: #66ccff; }
+.mutation-btn.Frozen   { background: #00ccff; }
+.mutation-btn.Burnt    { background: #993300; }
+.mutation-btn.Cooked   { background: #ff6600; }
+.mutation-btn.Clay     { background: #b87333; }
+.mutation-btn.Ceramic  { background: #a3a3a3; }
+.mutation-btn.Verdant  { background: #66ff66; }
+.mutation-btn.Sundried { background: #ffaa00; }
+.mutation-btn.Paradisal{ background: #ff99ff; }
+
+button {
+  padding: 10px 15px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #00ffaa;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 #result {
   text-align: center;
-  font-size: 1.4rem;
   margin-top: 15px;
+  font-size: 18px;
   color: #00ff99;
   font-weight: bold;
-  text-shadow: 0 0 5px #00ffaa;
-}
-
-@media (max-width: 600px) {
-  .fruit-item {
-    width: 70px;
-  }
-
-  .mutation-btn {
-    min-width: unset;
-    font-size: 12px;
-  }
 }
